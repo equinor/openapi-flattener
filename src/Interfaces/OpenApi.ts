@@ -7,7 +7,7 @@ export interface OpenApi {
     tags: Tag[]
     'x-tagGroups': any[]
     paths: { [id: string]: Path }
-    components: any
+    components: Components
 }
 interface Path{
  'get': Get
@@ -56,6 +56,7 @@ export interface Response {
 export interface RequestBody {
     content : {[key in ContentType] : Content}
 }
+
 export interface Content{
     schema: any
 }
@@ -64,6 +65,12 @@ export const ResponseArray = ['200','201','204','400','401','403','404','409','5
  export type ResponseCode = typeof ResponseArray[number]
 
 export type ContentType = 'application/json'|'application/octet'
+
+export interface Components{
+     schemas : {[key : string] : any}
+     examples : {[key : string] : any}
+     responses : {[key : string] : any}
+}
 
 interface Contact {
     name: string

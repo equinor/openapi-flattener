@@ -61,6 +61,15 @@ dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
             }
         })
 
+        Object.entries(openApiSchema.components.schemas).forEach(([key, schema]) => {
+            openApiSchema.components.schemas[key] = mergeAllOf(schema, {ignoreAdditionalProperties: true})
+        })
+        Object.entries(openApiSchema.components.examples).forEach(([key, schema]) => {
+            openApiSchema.components.examples[key] = mergeAllOf(schema, {ignoreAdditionalProperties: true})
+        })
+        Object.entries(openApiSchema.components.responses).forEach(([key, schema]) => {
+            openApiSchema.components.responses[key] = mergeAllOf(schema, {ignoreAdditionalProperties: true})
+        })
         if (ext === '.json') {
             let data = JSON.stringify(openApiSchema);
             writeFileSync(output, data, {encoding: 'utf8', flag: 'w'});
