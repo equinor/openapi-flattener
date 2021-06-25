@@ -3,7 +3,7 @@ import path from 'path';
 import mergeAllOf from 'json-schema-merge-allof';
 import {dereference, JSONSchema,} from 'json-schema-ref-parser';
 import minimist from 'minimist';
-import {OpenApi} from './Interfaces/OpenApi'
+import {OpenApi, RequestBody, Response} from './Interfaces/OpenApi'
 
 const argv = minimist(process.argv.slice(2));
 if (!argv.s || !argv.o) {
@@ -13,6 +13,26 @@ if (!argv.s || !argv.o) {
 
 const input = path.resolve(argv.s);
 
+function mergeResponse(key: string, response: Response) {
+    if (!response?.content || !('application/json' in response.content)) return
+
+    let responseSchema = response.content['application/json'].schema
+    if (!responseSchema) return
+
+    let mergedSchema = mergeAllOf(responseSchema, {ignoreAdditionalProperties: true})
+    if (mergedSchema)
+        response.content['application/json'].schema = mergedSchema
+}
+
+function mergeRequestBody(requestBody: RequestBody) {
+    let bodySchema = requestBody.content['application/json']?.schema
+    if (!bodySchema) return
+
+    let mergedSchema = mergeAllOf(bodySchema, {ignoreAdditionalProperties: true})
+    if (mergedSchema)
+        requestBody.content['application/json'].schema = mergedSchema
+}
+
 dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
     if (err) {
         console.error(err);
@@ -21,19 +41,24 @@ dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
         let output = path.resolve(argv.o);
         let ext = path.parse(output).ext;
 
-        Object.values(openApiSchema.paths).forEach(path => {
-            let innerSchema = path.get?.responses['200'].content['application/json']?.schema
-            if (!innerSchema) return;
+        Object.entries(openApiSchema.paths).forEach(([id, path]) => {
+            console.log(id)
+            if (path.get) {
+                console.log('GET')
+                Object.entries(path.get.responses).forEach(([key, response]) => {
+                    console.log(key)
+                    mergeResponse(key, response)
+                })
+            }
 
-            console.log('BEFORE:' + path)
-            console.log(innerSchema)
-
-            let allOfSchema = mergeAllOf(innerSchema, {ignoreAdditionalProperties: true})
-
-            console.log('AFTER:')
-            console.log(allOfSchema)
-            if (allOfSchema)
-                 path.get.responses[200].content['application/json'].schema = allOfSchema
+            if (path.post) {
+                console.log('POST')
+                Object.entries(path.post.responses).forEach(([key, response]) => {
+                    console.log(key)
+                    mergeResponse(key, response);
+                })
+                mergeRequestBody(path.post.requestBody)
+            }
         })
 
         if (ext === '.json') {

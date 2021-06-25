@@ -49,17 +49,21 @@ interface Info {
     'x-logo': any
 }
 
-export type Response = {
-    content : {[k in ContentType] : Content}
+export interface Response {
+    content : {[key in ContentType]  : Content}
 }
 
+export interface RequestBody {
+    content : {[key in ContentType] : Content}
+}
 export interface Content{
     schema: any
 }
+export const ResponseArray = ['200','201','204','400','401','403','404','409','500','501','502','503'];
 
-type ResponseCode = 200|201|204|301|400|401|403|404|409|500|501|502|503
+ export type ResponseCode = typeof ResponseArray[number]
 
-type ContentType = 'application/json'|'application/octet'
+export type ContentType = 'application/json'|'application/octet'
 
 interface Contact {
     name: string
@@ -80,8 +84,8 @@ interface Post {
     description: string
     operationId: string
     parameters: any[]
-    requestBody: any
-    responses: any
+    requestBody: RequestBody
+    responses: { [responses in ResponseCode]: Response }
 }
 interface Patch {
     tags: string[]
