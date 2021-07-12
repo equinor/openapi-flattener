@@ -13,5 +13,30 @@
     "json-schema-ref-parser": "^9.0.9",
     "minimist": "^1.2.5",
     "node-yaml": "^4.0.1"
-  }
+  },
+  "name": "openapi-flattener",
+  "description": "Install: `npm install openapi-flattener --save`",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equinor/openapi-flattener.git"
+  },
+  "bin": {
+    "openapi-flatter": "./dist/flattener.js"
+  },
+  "keywords": [
+    "OpenApi",
+    "flattener",
+    "derefence",
+    "merge",
+    "spec",
+    "schema"
+  ],
+  "author": "Henri Siik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/equinor/openapi-flattener/issues"
+  },
+  "homepage": "https://github.com/equinor/openapi-flattener#readme"
 }
