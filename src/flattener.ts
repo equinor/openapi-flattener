@@ -42,11 +42,9 @@ dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
         let ext = path.parse(output).ext;
 
         Object.entries(openApiSchema.paths).forEach(([id, path]) => {
-            console.log(id)
             if (path.get) {
                 console.log('GET')
                 Object.entries(path.get.responses).forEach(([key, response]) => {
-                    console.log(key)
                     mergeResponse(key, response)
                 })
             }
@@ -54,7 +52,6 @@ dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
             if (path.post) {
                 console.log('POST')
                 Object.entries(path.post.responses).forEach(([key, response]) => {
-                    console.log(key)
                     mergeResponse(key, response);
                 })
                 mergeRequestBody(path.post.requestBody)
