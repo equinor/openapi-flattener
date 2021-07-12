@@ -25,6 +25,7 @@
   "bin": {
     "openapi-flatter": "./dist/flattener.js"
   },
+  "files":["./dist/flattener.js"],
   "keywords": [
     "OpenApi",
     "flattener",
