@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {writeFileSync} from 'fs';
 import path from 'path';
 import mergeAllOf from 'json-schema-merge-allof';
