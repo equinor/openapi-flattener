@@ -65,16 +65,18 @@ dereference(input, {}, (err: Error | null, schema: JSONSchema | undefined) => {
                 mergeRequestBody(path.post.requestBody)
             }
         })
-
-        Object.entries(openApiSchema.components.schemas).forEach(([key, schema]) => {
-            openApiSchema.components.schemas[key] = mergeAllOf(schema, defaultOptions)
-        })
-        Object.entries(openApiSchema.components.examples).forEach(([key, schema]) => {
-            openApiSchema.components.examples[key] = mergeAllOf(schema, defaultOptions)
-        })
-        Object.entries(openApiSchema.components.responses).forEach(([key, schema]) => {
-            openApiSchema.components.responses[key] = mergeAllOf(schema, defaultOptions)
-        })
+        if (openApiSchema.components.schemas)
+            Object.entries(openApiSchema.components.schemas).forEach(([key, schema]) => {
+                openApiSchema.components.schemas[key] = mergeAllOf(schema, defaultOptions)
+            })
+        if (openApiSchema.components.examples)
+            Object.entries(openApiSchema.components.examples).forEach(([key, schema]) => {
+                openApiSchema.components.examples[key] = mergeAllOf(schema, defaultOptions)
+            })
+        if (openApiSchema.components.responses)
+            Object.entries(openApiSchema.components.responses).forEach(([key, schema]) => {
+                openApiSchema.components.responses[key] = mergeAllOf(schema, defaultOptions)
+            })
         if (ext === '.json') {
             let data = JSON.stringify(openApiSchema);
             writeFileSync(output, data, {encoding: 'utf8', flag: 'w'});
