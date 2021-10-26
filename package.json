@@ -15,8 +15,8 @@
     "node-yaml": "^4.0.1"
   },
   "name": "openapi-flattener",
-  "description": "Install: `npm install openapi-flattener --save`",
-  "version": "1.0.2",
+  "description": "Install: `npm install openapi-flattener --save -g`",
+  "version": "1.0.3",
   "main": "index.js",
   "engines": {
     "node": ">=12.21.0"
