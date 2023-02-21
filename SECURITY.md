@@ -8,4 +8,4 @@
 
 ## Reporting a Vulnerability
 
-Please report any vulnerabilities via Githubs build in reporting mechanism for this repository
+Please report any vulnerabilities via the issues section
