@@ -1,3 +1,4 @@
+[![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/openapi-flattener/badge)](https://scm-compliance-api.radix.equinor.com/repos/equinor/openapi-flattener/badge)
 # openapi-flattener
 
 Install: `npm install openapi-flattener --save -g`
