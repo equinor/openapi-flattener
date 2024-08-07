@@ -3,14 +3,16 @@
     "@types/json-schema-merge-allof": "^0.6.0",
     "@types/minimist": "^1.2.1",
     "@types/node": "^15.12.4",
-    "typescript": "^4.3.4"
+    "typescript": "^5.5.4"
   },
   "scripts": {
     "compile": "npx tsc -w"
   },
   "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.7.0",
+    "allof-merge": "^0.6.6",
+    "json-crawl": "^0.5.3",
     "json-schema-merge-allof": "^0.8.1",
-    "json-schema-ref-parser": "^9.0.9",
     "minimist": "^1.2.5",
     "node-yaml": "^4.0.1"
   },
@@ -28,7 +30,9 @@
   "bin": {
     "openapi-flattener": "./dist/flattener.js"
   },
-  "files":["./dist/flattener.js"],
+  "files": [
+    "./dist/flattener.js"
+  ],
   "keywords": [
     "OpenApi",
     "flattener",
